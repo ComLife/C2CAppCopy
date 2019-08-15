@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>10</integer>
+	<key>logs</key>
+	<dict>
+		<key>BBC46CE7-733C-41C2-B111-11B304D74A55</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>BBC46CE7-733C-41C2-B111-11B304D74A55.xcactivitylog</string>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>C2CAppCopy project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>C2CAppCopy</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building workspace C2CAppCopy with scheme C2CAppCopy and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>587573832.65407002</real>
+			<key>timeStoppedRecording</key>
+			<real>587573837.94544101</real>
+			<key>title</key>
+			<string>Building workspace C2CAppCopy with scheme C2CAppCopy and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>BBC46CE7-733C-41C2-B111-11B304D74A55</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
