@@ -53,10 +53,5 @@ export default createBottomTabNavigator(
   {
     initialRouteName: "Home",
     lazy: true
-    // tabBarOptions: {
-    //   showIcon: true,
-    //   showLabel: false,
-    //   activeTintColor: "#256fe9"
-    // }
   }
 );
