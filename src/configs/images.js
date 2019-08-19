@@ -7,4 +7,5 @@ export default {
   tab3_selected: require('../assets/tab/icon_trading.png'),
   tab4: require('../assets/tab/icon_assets_2.png'),
   tab4_selected: require('../assets/tab/icon_assets.png'),
+  back: require('../assets/back.png'),
 };

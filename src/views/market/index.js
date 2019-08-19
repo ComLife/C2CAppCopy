@@ -1,7 +1,8 @@
-import React, { Fragment } from "react";
+import React, { memo, Fragment } from "react";
 import { SafeAreaView, StyleSheet, View, StatusBar, Text } from "react-native";
 
-const Market = () => {
+const Market = memo(props => {
+  console.log("Market = ", props);
   return (
     <Fragment>
       <StatusBar barStyle="dark-content" />
@@ -11,7 +12,7 @@ const Market = () => {
       </View>
     </Fragment>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {

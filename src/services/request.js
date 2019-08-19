@@ -1,5 +1,5 @@
 import { DeviceEventEmitter } from "react-native";
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 import Config from "../configs/request-config";
 import { DeviceEventType, ERROR_CODE } from "../configs/enum-config";
 
