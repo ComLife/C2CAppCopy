@@ -8,4 +8,6 @@ export default {
   tab4: require('../assets/tab/icon_assets_2.png'),
   tab4_selected: require('../assets/tab/icon_assets.png'),
   back: require('../assets/back.png'),
+  icon_logo: require('../assets/icon_logo.png'),
+
 };
