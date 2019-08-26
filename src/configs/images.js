@@ -9,5 +9,6 @@ export default {
   tab4_selected: require('../assets/tab/icon_assets.png'),
   back: require('../assets/back.png'),
   icon_logo: require('../assets/icon_logo.png'),
-
+  icon_search: require('../assets/icon_search.png'),
+  icon_choice: require('../assets/Choice.png'),
 };

@@ -8,7 +8,7 @@ import {
 } from "../utils/safe-encrypt";
 
 export default new class BaseService extends Request {
-  login(params = {}) {
+  loginRequest(params = {}) {
     console.log("login req:", params);
     Config.headers.signature = login.needSign ? getSigString(params) : "";
     Config.headers.sign = login.encryptRequest ? getSignWithRSAAndAES() : "";
