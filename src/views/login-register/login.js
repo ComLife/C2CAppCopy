@@ -2,7 +2,6 @@ import React, { memo, useEffect, useState, Fragment } from "react";
 import {
   Image,
   Keyboard,
-  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -17,6 +16,8 @@ import UIColor from "../../configs/colors";
 import { Button } from "space-ui";
 import BaseService from "../../services/base";
 import { getDecryptWithAES } from "../../utils/safe-encrypt";
+import { loginAction } from "../../redux/actions/base";
+import { connect } from "react-redux";
 
 const Login = memo(props => {
   const [country, setCountry] = useState("");
@@ -58,8 +59,9 @@ const Login = memo(props => {
     });
     const decryptResult = getDecryptWithAES(originResp.result);
     const result = JSON.parse(decryptResult);
-    console.log("wwwwwwwwwwwwww======", result);
-    // props.loginRequest({ phone: `+${areaCode}-${phone}`, password, encrypt_flag: false });
+    if (result.code === "1") {
+      props.login(result.data);
+    }
   };
 
   const isDisabled = !(phone && password ? true : false);
@@ -132,4 +134,16 @@ const Login = memo(props => {
     </Fragment>
   );
 });
-export default Login;
+
+const mapDispatchToProps = disPatch => {
+  return {
+    login: obj => {
+      disPatch(loginAction(obj));
+    }
+  };
+};
+// export default Login;
+export default connect(
+  null,
+  mapDispatchToProps
+)(Login);
