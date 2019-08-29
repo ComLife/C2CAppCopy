@@ -58,7 +58,7 @@ const Login = memo(props => {
 
   const onLoginPress = async () => {
     Keyboard.dismiss(); // 把弹出的键盘收回去，同时使当前的文本框失去焦点。
-    const originResp: any = await BaseService.loginRequest({
+    const originResp = await BaseService.loginRequest({
       phone: `+${areaCode}-${phone}`,
       password,
       encrypt_flag: false
