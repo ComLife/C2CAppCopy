@@ -18,6 +18,7 @@ import BaseService from "../../services/base";
 import { getDecryptWithAES } from "../../utils/safe-encrypt";
 import { loginAction } from "../../redux/actions/base";
 import { connect } from "react-redux";
+import { EasyToast } from "../../components/toast";
 
 const Login = memo(props => {
   const [country, setCountry] = useState("");
@@ -26,6 +27,11 @@ const Login = memo(props => {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
+    Store.get("account").then(account => {
+      if (account) {
+        setPhone(account);
+      }
+    });
     Store.get("areaCode").then(areaCode => {
       if (areaCode) {
         setAreaCode(areaCode);
@@ -53,85 +59,90 @@ const Login = memo(props => {
   const onLoginPress = async () => {
     Keyboard.dismiss(); // 把弹出的键盘收回去，同时使当前的文本框失去焦点。
     const originResp: any = await BaseService.loginRequest({
-      phone: phone,
+      phone: `+${areaCode}-${phone}`,
       password,
       encrypt_flag: false
     });
     const decryptResult = getDecryptWithAES(originResp.result);
     const result = JSON.parse(decryptResult);
+    console.log("login data=", result);
     if (result.code === "1") {
+      Store.save("account", phone);
+      Store.save("areaCode", areaCode);
+      Store.save("country", country);
       props.login(result.data);
+      props.navigation.navigate("TabHome");
+    } else {
+      EasyToast.show(result.msg);
     }
   };
 
   const isDisabled = !(phone && password ? true : false);
   return (
-    <Fragment>
-      <SafeAreaView>
-        <Header onPressLeft={() => props.navigation.goBack()} />
-        <View style={styles.loginView}>
-          <Image source={Imgs.icon_logo} style={styles.titleHeaderImage} />
-          <TouchableOpacity
-            style={styles.countryView}
-            onPress={() =>
-              props.navigation.navigate("Internationalization", {
-                view: "Login"
-              })
-            }
-          >
-            <Text style={styles.phoneHeader}>{country}</Text>
-            <Text style={styles.phoneHeader}>{`+${areaCode}`}</Text>
-            <Image source={Imgs.icon_choice} />
-          </TouchableOpacity>
-          <TextInput
-            style={styles.codeInput}
-            autoCapitalize="none"
-            onChangeText={onPhoneChange}
-            keyboardType={"numeric"}
-            placeholder={"手机号"}
-            value={phone}
-            placeholderTextColor={UIColor.colorB3}
-          />
-          <View style={styles.inputDiving} />
+    <SafeAreaView>
+      <Header onPressLeft={() => props.navigation.goBack()} />
+      <View style={styles.loginView}>
+        <Image source={Imgs.icon_logo} style={styles.titleHeaderImage} />
+        <TouchableOpacity
+          style={styles.countryView}
+          onPress={() =>
+            props.navigation.navigate("Internationalization", {
+              view: "Login"
+            })
+          }
+        >
+          <Text style={styles.phoneHeader}>{country}</Text>
+          <Text style={styles.phoneHeader}>{`+${areaCode}`}</Text>
+          <Image source={Imgs.icon_choice} />
+        </TouchableOpacity>
+        <TextInput
+          style={styles.codeInput}
+          autoCapitalize="none"
+          onChangeText={onPhoneChange}
+          keyboardType={"numeric"}
+          placeholder={"手机号"}
+          value={phone}
+          placeholderTextColor={UIColor.colorB3}
+        />
+        <View style={styles.inputDiving} />
 
-          <TextInput
-            style={styles.passInput}
-            autoCapitalize="none"
-            onChangeText={onPwdChange}
-            secureTextEntry
-            placeholderTextColor={UIColor.colorB3}
-            placeholder={"密码"}
-          />
-          <View style={styles.inputDiving} />
+        <TextInput
+          style={styles.passInput}
+          autoCapitalize="none"
+          onChangeText={onPwdChange}
+          secureTextEntry
+          placeholderTextColor={UIColor.colorB3}
+          placeholder={"密码"}
+        />
+        <View style={styles.inputDiving} />
 
-          <Button
-            onPress={onLoginPress}
-            disabled={isDisabled}
-            style={styles.loginButton}
-            textStyle={styles.btnText}
-            disableColor={UIColor.disPressColor}
-          >
-            登录
-          </Button>
+        <Button
+          onPress={onLoginPress}
+          disabled={isDisabled}
+          style={styles.loginButton}
+          textStyle={styles.btnText}
+          disableColor={UIColor.disPressColor}
+        >
+          登录
+        </Button>
 
+        <Text
+          style={styles.forgotPassText}
+          // onPress={() => navigate("ForgotPassword")}
+        >
+          忘记密码
+        </Text>
+        <View style={styles.registerTextView}>
+          <Text style={styles.registerText}>还没注册账号？</Text>
           <Text
-            style={styles.forgotPassText}
-            // onPress={() => navigate("ForgotPassword")}
+            style={styles.onRegisterText}
+            onPress={() => props.navigation.navigate("Register")}
           >
-            忘记密码
+            去注册
           </Text>
-          <View style={styles.registerTextView}>
-            <Text style={styles.registerText}>还没注册账号？</Text>
-            <Text
-              style={styles.onRegisterText}
-              // onPress={() => navigate("Register")}
-            >
-              去注册
-            </Text>
-          </View>
         </View>
-      </SafeAreaView>
-    </Fragment>
+      </View>
+    </SafeAreaView>
   );
 });
 
