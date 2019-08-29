@@ -70,5 +70,29 @@ export default StyleSheet.create({
     fontSize: setText(27),
     color: UIColor.colorA1,
     fontWeight: "bold"
+  },
+  registerTitle: {
+    marginTop: setRatio(60),
+    fontSize: setText(42),
+    color: UIColor.colorB1,
+    fontWeight: "bold"
+  },
+  getCodeInputView: {
+    flexDirection: "row",
+    alignItems: "center",
+    height: setRatio(70),
+    marginTop: setRatio(50),
+    justifyContent: "space-between"
+  },
+  noteCodeInput: {
+    flex: 1,
+    height: setRatio(70),
+    fontWeight: "bold",
+    fontSize: setText(27),
+    color: UIColor.colorB1
+  },
+  codeText: {
+    fontSize: setRatio(27),
+    color: UIColor.colorA1
   }
 });
