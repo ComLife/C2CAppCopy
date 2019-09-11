@@ -1,12 +1,14 @@
-import React, { memo, useEffect, useState, Fragment } from "react";
+import React, { memo, useEffect, useState } from "react";
 import {
+  AppState,
+  DeviceEventEmitter,
   Image,
   Keyboard,
+  SafeAreaView,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
-  SafeAreaView
+  View
 } from "react-native";
 import styles from "./styles";
 import Imgs from "../../configs/images";
@@ -19,12 +21,33 @@ import { getDecryptWithAES } from "../../utils/safe-encrypt";
 import { loginAction } from "../../redux/actions/base";
 import { connect } from "react-redux";
 import { EasyToast } from "../../components/toast";
+import { DeviceEventName, requestConfig } from "../../configs";
 
 const Login = memo(props => {
   const [country, setCountry] = useState("");
   const [areaCode, setAreaCode] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+
+  const updateCode = res => {
+    if (res.view === "Login") {
+      setAreaCode(res.code);
+      setCountry(res.country);
+    }
+  };
+
+  useEffect(() => {
+    DeviceEventEmitter.addListener(
+      DeviceEventName.refresh_areaCode,
+      updateCode
+    );
+    return () => {
+      DeviceEventEmitter.removeListener(
+        DeviceEventName.refresh_areaCode,
+        updateCode
+      );
+    };
+  });
 
   useEffect(() => {
     Store.get("account").then(account => {
@@ -70,6 +93,8 @@ const Login = memo(props => {
       Store.save("account", phone);
       Store.save("areaCode", areaCode);
       Store.save("country", country);
+      requestConfig.headers.token = result.data.token || "";
+      requestConfig.headers.uid = result.data.uid || "";
       props.login(result.data);
       props.navigation.navigate("TabHome");
     } else {
