@@ -22,8 +22,6 @@ export default class Request {
         if (data.code === ERROR_CODE.TOKEN_FAIL) {
           // 拿旧token，换新token
           DeviceEventEmitter.emit(DeviceEventType.REFRESH_LOGIN_TOKEN);
-        } else if (data.code !== ERROR_CODE.SUCCESS) {
-          console.warn("不成功:", data.code);
         }
         return res;
       },

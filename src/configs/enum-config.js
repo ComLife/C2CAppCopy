@@ -13,3 +13,7 @@ export const DeviceEventType = {
   REFRESH_LOGIN_TOKEN: "REFRESH_LOGIN_TOKEN",
   RE_LOGIN: "RE_LOGIN"
 };
+
+export const DeviceEventName = {
+  refresh_areaCode: "refresh_areaCode" // 刷新区域码
+};
