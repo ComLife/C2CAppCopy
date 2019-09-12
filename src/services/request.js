@@ -43,7 +43,8 @@ export default class Request {
     };
     return () => {
       return this.instance.request(config).then(async res => {
-        console.log("this.instance.request.then======", res.data);
+        console.log("this.instance.request.config =", config);
+        console.log("this.instance.request.then =", res.data);
         return res.data;
       });
     };
