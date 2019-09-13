@@ -1,5 +1,5 @@
 import Request from "./request";
-import { login, registerCode} from "../configs/request-path";
+import { login, registerCode, loginpwdCode, loginpwdReset, register} from "../configs/request-path";
 import Config from "../configs/request-config";
 import {
   getEncryptWithAES,
@@ -29,4 +29,38 @@ export default new class BaseService extends Request {
       data: body
     })();
   }
+
+    // 找回密码验证码获取
+    loginpwdCode(params = {}) {
+        console.log('loginpwdCode req:', params);
+        Config.headers.sign = loginpwdCode.encryptRequest ? getSigString(params) : '';
+        const body = loginpwdCode.encryptRequest ? getEncryptWithAES(params) : params;
+        return this.request({
+            url: Config.httpPrefix + Config.baseUrl + loginpwdCode.path,
+            data: body,
+        })();
+    }
+
+    // 找回密码重置
+    loginpwdReset(params = {}) {
+        console.log('loginpwdReset req:', params);
+        Config.headers.signature = loginpwdReset.needSign ? getSigString(params) : '';
+        Config.headers.sign = loginpwdReset.encryptRequest ? getSignWithRSAAndAES() : '';
+        const body = loginpwdReset.encryptRequest ? getEncryptWithAES(params) : params;
+        return this.request({
+            url: Config.httpPrefix + Config.baseUrl + loginpwdReset.path,
+            data: body,
+        })();
+    }
+
+    // 注册
+    register(params = {}) {
+        console.log('register req:', params);
+        Config.headers.sign = register.encryptRequest ? getSignWithRSAAndAES() : '';
+        const body = register.encryptRequest ? getEncryptWithAES(params) : params;
+        return this.request({
+            url: Config.httpPrefix + Config.baseUrl + register.path,
+            data: body,
+        })();
+    }
 }();

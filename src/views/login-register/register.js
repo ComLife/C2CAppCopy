@@ -6,6 +6,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  DeviceEventEmitter,
   View,
   SafeAreaView
 } from "react-native";
@@ -14,13 +15,14 @@ import Store from "react-native-simple-store";
 import { Button } from "space-ui";
 import styles from "./styles";
 import Header from "../../components/Header";
-import UIColor from "../../configs/colors";
+import {UIColor, Imgs, DeviceEventName, ERROR_CODE, requestConfig} from "../../configs";
 import BaseService from "../../services/base";
 import { EasyToast } from "../../components/toast";
 import useInterval from "../../components/use-interval";
-import Imgs from "../../configs/images";
+import { loginAction } from "../../redux/actions/base";
 
-const Login = memo(props => {
+
+const Register = memo(props => {
   const [country, setCountry] = useState("");
   const [areaCode, setAreaCode] = useState("");
   const [phone, setPhone] = useState("");
@@ -70,6 +72,26 @@ const Login = memo(props => {
     };
   });
 
+  const updateCode = res => {
+    if (res.view === "Register") {
+      setAreaCode(res.code);
+      setCountry(res.country);
+    }
+  };
+
+  useEffect(() => {
+    DeviceEventEmitter.addListener(
+        DeviceEventName.refresh_areaCode,
+        updateCode
+    );
+    return () => {
+      DeviceEventEmitter.removeListener(
+          DeviceEventName.refresh_areaCode,
+          updateCode
+      );
+    };
+  });
+
   useInterval(
     () => {
       setWaitTime(waitTime - 1);
@@ -80,29 +102,40 @@ const Login = memo(props => {
 
   const onGetCodePress = async () => {
     Keyboard.dismiss();
-    const originResp = await BaseService.registerCodeRequest({
+    await BaseService.registerCodeRequest({
       auth_type: 1,
       auth_data: `+${areaCode}-${phone}`
+    }).then((originResp)=>{
+      console.log("onGetCodePress =", originResp);
+      if (originResp.code === ERROR_CODE.SUCCESS) {
+        EasyToast.show("验证码发送成功，请注意查收");
+        setWaitTime(60);
+      }else{
+        EasyToast.show(originResp.msg);
+      }
     });
-    console.log("onGetCodePress =", originResp);
-    if (originResp.code === "1") {
-      EasyToast.show("验证码发送成功，请注意查收");
-      setWaitTime(60);
-    }
-    // EasyShowLD.loadingShow("发送中");
-    // // eslint-disable-next-line @typescript-eslint/camelcase
-    // props.registerCodeRequest({
-    //   auth_type: 1,
-    //   auth_data: `+${areaCode}-${phone}`
-    // });
   };
 
-  const onComfirClick = () => {
+  const onComfirClick = async () => {
     Keyboard.dismiss();
     if (password !== nextPassword) {
+      EasyToast.show('两次密码不一致，请重新输入');
       return;
     }
     // props.registerResetRequest({ type: 1, phone: `+${areaCode}-${phone}`, password, code: noteCode });
+    await BaseService.register({ type: 1, phone: `+${areaCode}-${phone}`, password, code: noteCode }).then((res)=>{
+      if(res.code === ERROR_CODE.SUCCESS){
+        Store.save("account", phone);
+        Store.save("areaCode", areaCode);
+        Store.save("country", country);
+        props.login(res.data);
+        requestConfig.headers.token = res.data.token || '';
+        requestConfig.headers.uid = res.data.uid || '';
+        props.navigation.navigate('CapitalPwdInit');
+      }else{
+        EasyToast.show(res.msg);
+      }
+    });
   };
 
   const onBackClick = () => {
@@ -241,8 +274,16 @@ const Login = memo(props => {
   );
 });
 
+const mapDispatchToProps = disPatch => {
+  return {
+    login: obj => {
+      disPatch(loginAction(obj));
+    }
+  };
+};
+
 // export default Login;
 export default connect(
   null,
-  null
-)(Login);
+    mapDispatchToProps
+)(Register);

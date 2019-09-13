@@ -153,7 +153,7 @@ const Login = memo(props => {
 
         <Text
           style={styles.forgotPassText}
-          // onPress={() => navigate("ForgotPassword")}
+          onPress={() => props.navigation.navigate("ForgotPassword")}
         >
           忘记密码
         </Text>

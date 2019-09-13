@@ -154,5 +154,11 @@ export default StyleSheet.create({
     width: setRatio(30),
     top: setRatio(10),
     bottom: setRatio(10)
-  }
+  },
+  titleHeaderText: {
+    marginTop: setRatio(50),
+    fontSize: setText(42),
+    color: UIColor.colorB1,
+    fontWeight: 'bold',
+  },
 });
