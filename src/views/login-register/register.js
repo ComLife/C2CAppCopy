@@ -131,7 +131,7 @@ const Register = memo(props => {
         props.login(res.data);
         requestConfig.headers.token = res.data.token || '';
         requestConfig.headers.uid = res.data.uid || '';
-        props.navigation.navigate('CapitalPwdInit');
+        props.navigation.navigate('TabHome');
       }else{
         EasyToast.show(res.msg);
       }
