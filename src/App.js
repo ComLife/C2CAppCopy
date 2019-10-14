@@ -6,11 +6,11 @@
  * @flow
  */
 
-import React from "react";
-import { store } from "./redux/store";
-import { Provider } from "react-redux";
-import AppNavigator from "./routes/app-navigator";
-import { Toast } from "./components/toast";
+import React from 'react';
+import {store} from './redux/store';
+import {Provider} from 'react-redux';
+import AppNavigator from './routes/app-navigator';
+import {Toast} from './components/toast';
 
 const App = () => {
   return (

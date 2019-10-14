@@ -39,9 +39,9 @@ export function isObjectValueEqual(obj1, obj2) {
     return false;
   }
   for (let attr in obj1) {
-    let a1 = Object.prototype.toString.call(obj1[attr]) === "[object Object]";
-    let a2 = Object.prototype.toString.call(obj2[attr]) === "[object Object]";
-    let arr1 = Object.prototype.toString.call(obj1[attr]) === "[object Array]";
+    let a1 = Object.prototype.toString.call(obj1[attr]) === '[object Object]';
+    let a2 = Object.prototype.toString.call(obj2[attr]) === '[object Object]';
+    let arr1 = Object.prototype.toString.call(obj1[attr]) === '[object Array]';
     if (a1 && a2) {
       // 如果是对象继续判断
       return this.isObjectValueEqual(obj1[attr], obj2[attr]);

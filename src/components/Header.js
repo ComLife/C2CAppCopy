@@ -1,16 +1,9 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  Dimensions
-} from "react-native";
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {Dimensions, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
-import Imgs from "../configs/images";
-const ScreenSize = Dimensions.get("window");
+import Imgs from '../configs/images';
+const ScreenSize = Dimensions.get('window');
 
 export default class Header extends Component {
   static propTypes = {
@@ -30,13 +23,13 @@ export default class Header extends Component {
     style: PropTypes.object,
     leftStyle: PropTypes.object,
     leftTextStyle: PropTypes.object,
-    titleStyle: PropTypes.object
+    titleStyle: PropTypes.object,
   };
 
   static defaultProps = {
-    leftTitle: "",
-    title: "",
-    rightTitle: ""
+    leftTitle: '',
+    title: '',
+    rightTitle: '',
   };
 
   constructor(props) {
@@ -59,7 +52,7 @@ export default class Header extends Component {
       style,
       leftStyle,
       leftTextStyle,
-      titleStyle
+      titleStyle,
     } = this.props;
     /**
      * 渲染规则
@@ -67,15 +60,7 @@ export default class Header extends Component {
      */
     return (
       <View style={[styles.header, style]}>
-        <View style={styles.center}>
-          {titleComponent || (
-            <Text
-              style={[styles.headerTitle, titleStyle, { color: titleColor }]}
-            >
-              {title}
-            </Text>
-          )}
-        </View>
+        <View style={styles.center}>{titleComponent || <Text style={[styles.headerTitle, titleStyle, {color: titleColor}]}>{title}</Text>}</View>
         {leftComponent ||
           (leftTitle != undefined ? (
             <TouchableOpacity
@@ -83,34 +68,17 @@ export default class Header extends Component {
               activeOpacity={0.5}
               onPress={() => {
                 onPressLeft ? onPressLeft() : this.props.navigation.goBack();
-              }}
-            >
+              }}>
               <Image source={leftImage || Imgs.back} style={leftImage} />
-              <Text
-                style={[styles.leftText, leftTextStyle, { color: titleColor }]}
-              >
-                {leftTitle}
-              </Text>
+              <Text style={[styles.leftText, leftTextStyle, {color: titleColor}]}>{leftTitle}</Text>
             </TouchableOpacity>
           ) : (
             <View />
           ))}
         {rightComponent ||
           (rightTitle != undefined ? (
-            <TouchableOpacity
-              style={null}
-              activeOpacity={0.5}
-              onPress={onPressRight}
-            >
-              <Text
-                style={[
-                  styles.rightText,
-                  rightTextStyle,
-                  { color: titleColor }
-                ]}
-              >
-                {rightTitle}
-              </Text>
+            <TouchableOpacity style={null} activeOpacity={0.5} onPress={onPressRight}>
+              <Text style={[styles.rightText, rightTextStyle, {color: titleColor}]}>{rightTitle}</Text>
             </TouchableOpacity>
           ) : (
             <View />
@@ -124,42 +92,42 @@ const styles = StyleSheet.create({
   header: {
     width: ScreenSize.widget,
     height: 50,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 15
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15,
     // backgroundColor: Colors.themeWhite
   },
   headerTitle: {
     fontSize: 20,
-    fontWeight: "bold",
-    color: "#333333"
+    fontWeight: 'bold',
+    color: '#333333',
   },
   leftOut: {
-    flexDirection: "row",
-    alignItems: "center"
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   touchOpa: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     height: 30,
-    minWidth: 40
+    minWidth: 40,
   },
   leftText: {
     fontSize: 20,
-    color: "#333333",
-    marginLeft: 10
+    color: '#333333',
+    marginLeft: 10,
   },
   rightText: {
     fontSize: 22,
-    color: "#333333",
-    marginLeft: 10
+    color: '#333333',
+    marginLeft: 10,
   },
   center: {
-    position: "absolute",
+    position: 'absolute',
     right: 30,
     left: 30,
-    justifyContent: "center",
-    flexDirection: "row"
-  }
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
 });

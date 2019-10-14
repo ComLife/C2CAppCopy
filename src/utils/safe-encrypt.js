@@ -1,8 +1,8 @@
-import CryptoJS from "crypto-js";
+import CryptoJS from 'crypto-js';
 // @ts-ignore
-import { KEYUTIL, KJUR, hextob64 } from "jsrsasign";
+import {KEYUTIL, KJUR, hextob64} from 'jsrsasign';
 
-const AESPublicKey = "d7b85f6e214abcda";
+const AESPublicKey = 'd7b85f6e214abcda';
 const RSAPublicKey = `
 -----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCPyz7mtdcercwAvc5mz9pm/LAnVKmSClHrTpU5sPGLY6Ulw7kryDRD2xxqP+toEU7UUr7qqkUkLI0IL1z75X3xuigqXvVUHgFhSKkoAbQG6aWJCKAVIbEDu9CbjlRj05oZ91gFtKqDyoTrOr8yB7OO09ZEi3ybkQg7n62D1WSGjwIDAQAB
@@ -42,7 +42,7 @@ export function objectSorting(json: any) {
 function getSHA256withRSA(inputString: string) {
   const key = KEYUTIL.getKey(privateKeyString);
   // 创建 Signature 对象，设置签名编码算法
-  const signature = new KJUR.crypto.Signature({ alg: "SHA256withRSA" });
+  const signature = new KJUR.crypto.Signature({alg: 'SHA256withRSA'});
   // 初始化
   signature.init(key);
   // 传入待加密字符串
@@ -60,9 +60,9 @@ function getSHA256withRSA(inputString: string) {
  */
 export function getSigString(json: any) {
   const jsonObj = objectSorting(json);
-  let valueString = "";
+  let valueString = '';
   Object.values(jsonObj).forEach(value => {
-    if (value !== null && value !== undefined && value !== "") {
+    if (value !== null && value !== undefined && value !== '') {
       valueString += `${value}`;
     }
   });
@@ -89,15 +89,15 @@ export function getSignWithRSAAndAES() {
  */
 export function getEncryptWithAES(json: any) {
   if (!json) {
-    return "";
+    return '';
   }
   const jsonString = JSON.stringify(json);
   const secretPassphrase = CryptoJS.enc.Utf8.parse(AESPublicKey);
-  const cipherOption = { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 };
+  const cipherOption = {mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7};
   const aesEncryptString = CryptoJS.AES.encrypt(
     jsonString,
     secretPassphrase,
-    cipherOption
+    cipherOption,
   ).toString();
   return aesEncryptString;
 }
@@ -110,13 +110,13 @@ export function getEncryptWithAES(json: any) {
  */
 export function getDecryptWithAES(inputString: string) {
   if (!inputString) {
-    return "";
+    return '';
   }
-  const cipherOption = { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 };
+  const cipherOption = {mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7};
   const decrypt = CryptoJS.AES.decrypt(
     inputString,
     CryptoJS.enc.Utf8.parse(AESPublicKey),
-    cipherOption
+    cipherOption,
   );
   const jsonString = CryptoJS.enc.Utf8.stringify(decrypt).toString();
   return jsonString;

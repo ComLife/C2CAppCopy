@@ -1,14 +1,14 @@
-import { applyMiddleware, createStore } from "redux";
-import thunkMiddleware from "redux-thunk";
-import rootReducer from "./reducers";
+import {applyMiddleware, createStore} from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import rootReducer from './reducers';
 
 const middleware = [thunkMiddleware];
 
 if (__DEV__) {
-  const logger = require("redux-logger").createLogger({
+  const logger = require('redux-logger').createLogger({
     collapsed: true,
     diff: true,
-    duration: false
+    duration: false,
   });
   middleware.push(logger);
 }

@@ -1,4 +1,4 @@
-import { Dimensions, PixelRatio, Platform, StatusBar } from "react-native";
+import {Dimensions, PixelRatio, Platform, StatusBar} from 'react-native';
 
 const uiWidth = 621;
 const uiHeight = 1344;
@@ -8,16 +8,16 @@ const iphoneXHeight = 812;
 const iphoneXXWidth = 414;
 const iphoneXXHeight = 896;
 
-const ScreenSize = Dimensions.get("window");
+const ScreenSize = Dimensions.get('window');
 const scale = Math.max(
   ScreenSize.height / uiHeight,
-  ScreenSize.width / uiWidth
+  ScreenSize.width / uiWidth,
 );
 const pixelRatio = PixelRatio.get();
 const fontScale = PixelRatio.getFontScale();
-export const IS_IOS = Platform.OS === "ios";
-export const IS_ANDROID = Platform.OS === "android";
-const screenRatio = Platform.OS === "ios" ? ScreenSize.width / uiWidth : scale;
+export const IS_IOS = Platform.OS === 'ios';
+export const IS_ANDROID = Platform.OS === 'android';
+const screenRatio = Platform.OS === 'ios' ? ScreenSize.width / uiWidth : scale;
 
 export const setRatio = (value: number) => {
   return screenRatio * value;
@@ -30,7 +30,7 @@ export const setText = (value: number) => {
 
 export const isIphoneX = () => {
   return (
-    Platform.OS === "ios" &&
+    Platform.OS === 'ios' &&
     ((ScreenSize.width === iphoneXWidth &&
       ScreenSize.height === iphoneXHeight) ||
       (ScreenSize.width === iphoneXWidth && ScreenSize.width === iphoneXHeight))
@@ -38,7 +38,7 @@ export const isIphoneX = () => {
 };
 export const isIphoneXX = () => {
   return (
-    Platform.OS === "ios" &&
+    Platform.OS === 'ios' &&
     ((ScreenSize.width === iphoneXXWidth &&
       ScreenSize.height === iphoneXXHeight) ||
       (ScreenSize.height === iphoneXXWidth &&
@@ -46,7 +46,7 @@ export const isIphoneXX = () => {
   );
 };
 export const moreHeight =
-  Platform.OS === "android"
+  Platform.OS === 'android'
     ? StatusBar.currentHeight
     : isIphoneX() || isIphoneXX()
     ? 44
@@ -57,6 +57,6 @@ export const statusBarHeight =
   (majorVersionIOS < 11 ? 20 : 0) +
   (isIphoneX() || isIphoneXX()
     ? setRatio(8)
-    : Platform.OS === "android"
+    : Platform.OS === 'android'
     ? StatusBar.currentHeight
     : 0);

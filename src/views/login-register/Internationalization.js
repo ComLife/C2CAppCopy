@@ -1,19 +1,11 @@
-import React, { Fragment } from "react";
-import {
-  DeviceEventEmitter,
-  Image,
-  SectionList,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View
-} from "react-native";
-import { SafeAreaView } from "react-navigation";
-import Header from "../../components/Header";
-import countryState from "../../configs/countries";
-import styles from "./styles";
-import { setRatio } from "../../utils/screen-untils";
-import { DeviceEventName, Imgs } from "../../configs";
+import React, {Fragment} from 'react';
+import {DeviceEventEmitter, Image, SectionList, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView} from 'react-navigation';
+import Header from '../../components/Header';
+import countryState from '../../configs/countries';
+import styles from './styles';
+import {setRatio} from '../../utils/screen-untils';
+import {DeviceEventName, Imgs} from '../../configs';
 
 export default class Internationalization extends React.Component {
   constructor(props) {
@@ -21,97 +13,67 @@ export default class Internationalization extends React.Component {
     this.state = {
       countryList: [
         {
-          title: "#",
+          title: '#',
           data: [
             {
-              code: "86",
-              flag: "CN",
-              name: "中国大陆",
-              format: "XXX XXXX XXXX",
-              pinyin: "zhong guo da lu",
-              index: "Z"
+              code: '86',
+              flag: 'CN',
+              name: '中国大陆',
+              format: 'XXX XXXX XXXX',
+              pinyin: 'zhong guo da lu',
+              index: 'Z',
             },
             {
-              code: "852",
-              flag: "HK",
-              name: "中国香港",
-              format: "X XXX XXXX",
-              pinyin: "zhong guo xiang gang",
-              index: "Z"
+              code: '852',
+              flag: 'HK',
+              name: '中国香港',
+              format: 'X XXX XXXX',
+              pinyin: 'zhong guo xiang gang',
+              index: 'Z',
             },
             {
-              code: "853",
-              flag: "MO",
-              name: "中国澳门",
-              format: "XXXX XXXX",
-              pinyin: "zhong guo ao men",
-              index: "Z"
+              code: '853',
+              flag: 'MO',
+              name: '中国澳门',
+              format: 'XXXX XXXX',
+              pinyin: 'zhong guo ao men',
+              index: 'Z',
             },
             {
-              code: "886",
-              flag: "TW",
-              name: "中国台湾",
-              format: "XXX XXX XXX",
-              pinyin: "zhong guo tai wan",
-              index: "Z"
-            }
-          ]
-        }
+              code: '886',
+              flag: 'TW',
+              name: '中国台湾',
+              format: 'XXX XXX XXX',
+              pinyin: 'zhong guo tai wan',
+              index: 'Z',
+            },
+          ],
+        },
       ],
-      countryChar: ["#"],
+      countryChar: ['#'],
       searchCountryList: [],
       searchCountryCharList: [],
-      searchCountry: "",
-      searchChar: "#"
+      searchCountry: '',
+      searchChar: '#',
     };
     this.createCountryListData();
   }
 
   createCountryListData = () => {
-    const charArray = [
-      "A",
-      "B",
-      "C",
-      "D",
-      "E",
-      "F",
-      "G",
-      "H",
-      "I",
-      "J",
-      "K",
-      "L",
-      "M",
-      "N",
-      "O",
-      "P",
-      "Q",
-      "R",
-      "S",
-      "T",
-      "U",
-      "V",
-      "W",
-      "X",
-      "Y",
-      "Z"
-    ];
+    const charArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
     for (let i = 0; i < charArray.length; i += 1) {
-      const countryObj = { title: "", data: [] };
+      const countryObj = {title: '', data: []};
       countryObj.title = charArray[i];
       for (let j = 0; j < countryState.length; j += 1) {
-        if (
-          countryObj.title === countryState[j].index &&
-          countryState[j].index !== ""
-        ) {
+        if (countryObj.title === countryState[j].index && countryState[j].index !== '') {
           countryObj.data.push(countryState[j]);
         }
       }
       if (countryObj.data.length) {
-        const { countryList, countryChar } = this.state;
+        const {countryList, countryChar} = this.state;
         this.setState({
           countryList: countryList.push(countryObj),
-          countryChar: countryChar.push(countryObj.title)
+          countryChar: countryChar.push(countryObj.title),
         });
       }
     }
@@ -121,17 +83,17 @@ export default class Internationalization extends React.Component {
     const txt = info.section.title;
     return (
       <View style={styles.subHeadView}>
-        <Text style={styles.subHeading}>{txt === "#" ? "常用" : txt}</Text>
+        <Text style={styles.subHeading}>{txt === '#' ? '常用' : txt}</Text>
       </View>
     );
   };
 
   onRegister = info => {
-    const view = this.props.navigation.getParam("view");
+    const view = this.props.navigation.getParam('view');
     DeviceEventEmitter.emit(DeviceEventName.refresh_areaCode, {
       view,
       code: info.code,
-      country: info.name
+      country: info.name,
     });
     this.props.navigation.goBack();
   };
@@ -141,10 +103,7 @@ export default class Internationalization extends React.Component {
     const areaCode = `+${info.item.code}`;
 
     return (
-      <TouchableOpacity
-        style={styles.itemView}
-        onPress={() => this.onRegister(info.item)}
-      >
+      <TouchableOpacity style={styles.itemView} onPress={() => this.onRegister(info.item)}>
         <Text style={styles.countryTxt}>{countryTxt}</Text>
         <Text style={styles.areaTxt}>{areaCode}</Text>
       </TouchableOpacity>
@@ -155,9 +114,9 @@ export default class Internationalization extends React.Component {
     this.sectionList.scrollToLocation({
       sectionIndex: info.index,
       itemIndex: 0,
-      viewOffset: setRatio(45)
+      viewOffset: setRatio(45),
     });
-    this.setState({ searchChar: info.item });
+    this.setState({searchChar: info.item});
   };
 
   _charRenderItem = countryCharList =>
@@ -167,20 +126,19 @@ export default class Internationalization extends React.Component {
         style={[
           styles.charTxt,
           {
-            color: this.state.searchChar === item ? "#5171ec" : "#37374a",
-            opacity: item === "#" ? 0 : 1
-          }
+            color: this.state.searchChar === item ? '#5171ec' : '#37374a',
+            opacity: item === '#' ? 0 : 1,
+          },
         ]}
-        onPress={() => this.jump({ item, index })}
-      >
+        onPress={() => this.jump({item, index})}>
         {item}
       </Text>
     ));
 
   checkStringType = char => {
-    const pattern = new RegExp("[\u4E00-\u9FA5]+");
-    const pattern2 = new RegExp("[A-Za-z]+");
-    const pattern3 = new RegExp("[0-9]+");
+    const pattern = new RegExp('[\u4E00-\u9FA5]+');
+    const pattern2 = new RegExp('[A-Za-z]+');
+    const pattern3 = new RegExp('[0-9]+');
     if (pattern.test(char)) {
       return 1;
     }
@@ -197,9 +155,9 @@ export default class Internationalization extends React.Component {
     const _searCharArray = [];
     const _searCharCountryArray = [];
     const _comUseArray = [];
-    const comUseObg = { title: "#", data: [] };
+    const comUseObg = {title: '#', data: []};
     for (let i = 0; i < _countryState.length; i += 1) {
-      if (_countryState[i].name && _countryState[i].name.indexOf("中国") >= 0) {
+      if (_countryState[i].name && _countryState[i].name.indexOf('中国') >= 0) {
         comUseObg.data.push(_countryState[i]);
       }
     }
@@ -207,13 +165,10 @@ export default class Internationalization extends React.Component {
       _comUseArray.push(comUseObg);
     }
     for (let i = 0; i < charArray.length; i += 1) {
-      const countryObj = { title: "", data: [] };
+      const countryObj = {title: '', data: []};
       countryObj.title = charArray[i];
       for (let j = 0; j < _countryState.length; j += 1) {
-        if (
-          countryObj.title === _countryState[j].index &&
-          _countryState[j].index !== ""
-        ) {
+        if (countryObj.title === _countryState[j].index && _countryState[j].index !== '') {
           countryObj.data.push(_countryState[j]);
         }
       }
@@ -224,14 +179,14 @@ export default class Internationalization extends React.Component {
     }
     this.setState({
       searchCountryList: _comUseArray.concat(_searCharCountryArray),
-      searchCountryCharList: _searCharArray
+      searchCountryCharList: _searCharArray,
     });
   };
 
   searchCountryArray = searchCountry => {
     const searchCountryArray = [];
     const searchCountryCharArray = [];
-    this.setState({ searchCountry });
+    this.setState({searchCountry});
     const charType = this.checkStringType(searchCountry[0]);
     for (let i = 0; i < countryState.length; i += 1) {
       if (JSON.stringify(countryState[i]).indexOf(searchCountry) >= 0) {
@@ -252,67 +207,42 @@ export default class Internationalization extends React.Component {
         searchCountryCharArray.push(searchCountryArray[j].index);
       }
     }
-    this.createSearchCountryListData(
-      searchCountryCharArray,
-      searchCountryArray
-    );
+    this.createSearchCountryListData(searchCountryCharArray, searchCountryArray);
   };
 
-  _ItemSeparatorComponent = () => (
-    <View style={{ backgroundColor: "#f5f5f7", height: 1 }} />
-  );
+  _ItemSeparatorComponent = () => <View style={{backgroundColor: '#f5f5f7', height: 1}} />;
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <Header
-          navigation={this.props.navigation}
-          leftTitle=""
-          title="国家地区"
-          leftImage={Imgs.back}
-        />
+      <SafeAreaView style={{flex: 1}}>
+        <Header navigation={this.props.navigation} leftTitle="" title="国家地区" leftImage={Imgs.back} />
         <View style={styles.inputDiving} />
         <View style={styles.searchView}>
-          <Image
-            source={Imgs.icon_search}
-            style={{ marginLeft: setRatio(32) }}
-          />
+          <Image source={Imgs.icon_search} style={{marginLeft: setRatio(32)}} />
           <TextInput
             style={styles.input}
             placeholder="请搜索国家和地区"
             autoCapitalize="none"
             placeholderTextColor="#afb5c3"
-            onChangeText={searchCountry =>
-              this.searchCountryArray(searchCountry)
-            }
+            onChangeText={searchCountry => this.searchCountryArray(searchCountry)}
             value={this.state.searchCountry}
           />
         </View>
-        <View style={{ flex: 1 }}>
+        <View style={{flex: 1}}>
           <SectionList
             initialNumToRender={270}
             // eslint-disable-next-line no-return-assign
             ref={ref => (this.sectionList = ref)}
             renderSectionHeader={this._sectionComp}
             renderItem={this._renderItem}
-            sections={
-              this.state.searchCountry
-                ? this.state.searchCountryList
-                : this.state.countryList
-            }
+            sections={this.state.searchCountry ? this.state.searchCountryList : this.state.countryList}
             keyExtractor={(item, index) => index}
             ItemSeparatorComponent={this._ItemSeparatorComponent}
             onEndReachedThreshold={0.1}
             stickySectionHeadersEnabled={false}
             onScrollToIndexFailed={() => {}}
           />
-          <View style={styles.flatChar}>
-            {this._charRenderItem(
-              this.state.searchCountry
-                ? this.state.searchCountryCharList
-                : this.state.countryChar
-            )}
-          </View>
+          <View style={styles.flatChar}>{this._charRenderItem(this.state.searchCountry ? this.state.searchCountryCharList : this.state.countryChar)}</View>
         </View>
       </SafeAreaView>
     );
