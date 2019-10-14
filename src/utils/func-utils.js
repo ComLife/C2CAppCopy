@@ -27,7 +27,7 @@
 // }
 
 // 判断两个对象是否相等
-export function isObjectValueEqual(obj1, obj2) {
+export const isObjectValueEqual = (obj1: any, obj2: any) => {
   let o1 = obj1 instanceof Object;
   let o2 = obj2 instanceof Object;
   if (!o1 || !o2) {
@@ -44,7 +44,7 @@ export function isObjectValueEqual(obj1, obj2) {
     let arr1 = Object.prototype.toString.call(obj1[attr]) === '[object Array]';
     if (a1 && a2) {
       // 如果是对象继续判断
-      return this.isObjectValueEqual(obj1[attr], obj2[attr]);
+      return isObjectValueEqual(obj1[attr], obj2[attr]);
     } else if (arr1) {
       // 如果是对象 判断
       if (obj1[attr].toString() !== obj2[attr].toString()) {
@@ -56,4 +56,4 @@ export function isObjectValueEqual(obj1, obj2) {
     }
   }
   return true;
-}
+};
